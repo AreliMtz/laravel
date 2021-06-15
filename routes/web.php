@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpleadoController;
+
+use function PHPSTORM_META\registerArgumentsSet;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,14 +17,27 @@ use App\Http\Controllers\EmpleadoController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::resource('empleado', EmpleadoController::class);
-Auth::routes();
+Route::resource('empleado', EmpleadoController::class)->middleware('auth');
+Auth::routes(['register'=>false,'reset'=>false]);
+
+Route::get('/home', [App\Http\Controllers\EmpleadoController::class, 'index'])->name('home');
+
+/*Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+/*Route::middleware(['auth', 'second'])->group(function () {
+    
+});*/
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/home', [App\Http\Controllers\EmpleadoController::class, 'index'])->name('home');
+
+});
