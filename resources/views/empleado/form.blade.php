@@ -1,3 +1,5 @@
+<h1>{{$modo}} Empleado</h1>
+
 <form action="{{ url('/empleado')}}" method="post" enctype="multipart/form-data">
 <label for="Nombre">Nombre</label>
 <input type="text" name="Nombre" value="{{isset($empleado) ? $empleado->Nombre : '' }}" id="Nombre">
@@ -9,10 +11,13 @@
 <input type="number" name="Nivel" value="{{isset($empleado) ? $empleado->Nivel : '' }}"  id="Nivel"> 
 <br>
 <label for="Foto">Foto</label>
-
+@if(isset($empleado->Foto))
+<img src="{{ asset('storage').'/'.$empleado->Foto }}" width="100" alt="">
+@endif
 <input type="file" name="Foto" id="Foto"> 
 <br>
-<input type="submit" value="Guardar">
+<input type="submit" value="{{$modo}} datos">
 <br>
 
+<a href="{{url('empleado/')}}">Regresar</a>
 </form>

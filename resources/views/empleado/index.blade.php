@@ -1,4 +1,10 @@
 <h1>Hola</h1>
+@if(Session::has('mensaje'))
+{{Session::get('mensaje')}}
+@endif
+
+<a href="{{url('empleado/create')}}">Registrar nuevo empleado</a>
+
 <table class="table table-light">
     <thead class="thead-light">
         <tr>
@@ -14,8 +20,8 @@
     @foreach($empleados as $empleado)
         <tr>
             <td>{{$empleado->id}}</td>
-            <td>{{$empleado->Foto}}
-            <img src="{{ asset('storage').'/'.$empleado->Foto }}" alt="">
+            <td>
+            <img src="{{ asset('storage').'/'.$empleado->Foto }}" width="100" alt="">
             </td>
             <td>{{$empleado->Nombre}}</td>
             <td>{{$empleado->Email}}</td>
@@ -30,7 +36,7 @@
             {{method_field('DELETE')}}
                 <input type="submit" onclick="return confirm('¿Realmente quieres borrar?')" value="Borrar">
             </form>
-             Borrar</td>
+            </td>
         </tr>
     @endforeach
     </tbody>
